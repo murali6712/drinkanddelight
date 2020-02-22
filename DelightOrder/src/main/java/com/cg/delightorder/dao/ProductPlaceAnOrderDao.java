@@ -1,14 +1,21 @@
 package com.cg.delightorder.dao;
 
+import java.util.Map;
+
 import com.cg.delightorder.dto.PlaceAnOrder;
 import com.cg.delightorder.util.PlaceAnOrderRepository;
 
 public class ProductPlaceAnOrderDao 
 {
-	public boolean addPlaceOrder (PlaceAnOrder beanClass)
+	
+	Map<Integer, PlaceAnOrder> placeAnOrderMap ;
+	public ProductPlaceAnOrderDao()
 	{
-		PlaceAnOrderRepository productOrderRepository = new PlaceAnOrderRepository();
-		return (productOrderRepository.repository(beanClass));
+		placeAnOrderMap = PlaceAnOrderRepository.getStockRepository();
 	}
 	
+	public Map<Integer, PlaceAnOrder> getOrderData()
+	{
+		return placeAnOrderMap;
+	}
 }

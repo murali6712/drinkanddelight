@@ -39,26 +39,6 @@ public class PlaceAnOrder
 	private double totalPrice;
 	private String deliveryStatus;
 	
-	//Constructor using above fields
-	
-	public PlaceAnOrder(String orderId, String name, String distributorId, double quantityValue, 
-			String quantityUnit,Date dateOfOrder, Date dateOfDelivery, double pricePerUnit, 
-			double totalPrice, String deliveryStatus,String warehouseId) 
-	{
-		super();
-		this.orderId = orderId;
-		this.productName = name;
-		this.distributorId = distributorId;
-		this.quantityValue = quantityValue;
-		this.quantityUnit = quantityUnit;
-		this.dateOfOrder = dateOfOrder;
-		this.dateOfDelivery = dateOfDelivery;
-		this.pricePerUnit = pricePerUnit;
-		this.totalPrice = totalPrice;
-		this.deliveryStatus = deliveryStatus;
-		this.warehouseId = warehouseId;
-	}
-	
 	//getters and setters
 	
 	public String getOrderId() {
