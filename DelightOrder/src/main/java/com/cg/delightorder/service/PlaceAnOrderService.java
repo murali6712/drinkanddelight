@@ -1,22 +1,30 @@
 package com.cg.delightorder.service;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
+import com.cg.delightorder.dao.DistributorDetailsDao;
 import com.cg.delightorder.dao.ProductOrderDetails;
 import com.cg.delightorder.dao.ProductPlaceAnOrderDao;
 import com.cg.delightorder.dto.PlaceAnOrder;
 import com.cg.delightorder.exception.InvalidDistributorIdException;
+import com.cg.delightorder.exception.InvalidIdException;
 import com.cg.delightorder.exception.InvalidPricePerUnitException;
 import com.cg.delightorder.exception.InvalidProductNameException;
 import com.cg.delightorder.exception.InvalidQuantityUnitException;
 import com.cg.delightorder.exception.InvalidQuantityValueException;
 import com.cg.delightorder.exception.InvalidWarehouseIdException;
+import com.cg.delightorder.exception.NoDataFoundException;
 
-public class PlaceAnOrderService implements ProductOrderService
+public class PlaceAnOrderService implements PlaceAnOrderServiceInterface
 {
 	ProductPlaceAnOrderDao placeOrder = new ProductPlaceAnOrderDao();
 	ProductOrderDetails orderObject = new ProductOrderDetails();
+	
+	DistributorDetailsDao distributorDetailsObject = new DistributorDetailsDao();
+	
+	ArrayList<Integer> listId = new ArrayList<Integer>();
 	
 	Map<Integer, PlaceAnOrder> orderMap;
 	
@@ -56,23 +64,23 @@ public class PlaceAnOrderService implements ProductOrderService
 	
 	public boolean productNameValidation(int key, String name) throws InvalidProductNameException
 	{
-		if(!productName.get(key).equals(name))
+		if(orderMap.get(key).getProductName().equals(name))
 		{
-			this.name = name;
+			
 			return true;
 			
 		}
 		else
 		{
-			throw new InvalidProductNameException("Invalid Name");
+			throw new InvalidProductNameException("Invalid Product Name");
 		}
 	}
 	
 	public boolean distributorIdValidation ( int key, String distributor) throws InvalidDistributorIdException
 	{
-		if (!distributorId.get(key).equals(distributor))
+		if (orderMap.get(key).getDistributorId().equals(distributor))
 		{
-			this.distributor = distributor;
+			
 			return true;
 		}
 		else
@@ -84,9 +92,9 @@ public class PlaceAnOrderService implements ProductOrderService
 	
 	public boolean wareHouseIdValidation ( int key, String warehouse) throws InvalidWarehouseIdException
 	{
-		if (!warehouseId.get(key).equals(warehouse))
+		if (orderMap.get(key).getWarehouseId().equals(warehouse))
 		{
-			this.warehouse = warehouse;
+			
 			return true;
 		}
 		else
@@ -97,9 +105,9 @@ public class PlaceAnOrderService implements ProductOrderService
 	
 	public boolean quantityValueValidation ( int key, double value) throws InvalidQuantityValueException
 	{
-		if (value > quantityValue.get(key))
+		if (orderMap.get(key).getQuantityValue() > quantityValue.get(key))
 		{
-			this.value = value;
+			
 			return true;
 		}
 		else
@@ -110,9 +118,9 @@ public class PlaceAnOrderService implements ProductOrderService
 	
 	public boolean quantityUnitValidation ( int key, String unit) throws InvalidQuantityUnitException
 	{
-		if (!quantityUnit.get(key).equals(unit))
+		if (orderMap.get(key).getQuantityUnit().equals(unit))
 		{
-			this.unit = unit;
+			
 			return true;
 		}
 		else
@@ -123,7 +131,7 @@ public class PlaceAnOrderService implements ProductOrderService
 
 	public boolean pricePerUnitValidation ( int key, double price) throws InvalidPricePerUnitException
 	{
-		if (!pricePerUnit.get(key).equals(price))
+		if (orderMap.get(key).getPricePerUnit() == price)
 		{
 			this.price = price;
 			return true;
@@ -148,6 +156,64 @@ public class PlaceAnOrderService implements ProductOrderService
 	{
 		orderObject.addOrderDao(bean);
 		return flag;
+	}
+
+	
+	
+	@Override
+	public List<PlaceAnOrder> getOrderDetailsService() {
+		// TODO Auto-generated method stub
+		return orderObject.getOrderDetailsDao();
+	}
+
+	@Override
+	public Map<Integer, PlaceAnOrder> getStockDisplay() {
+		// TODO Auto-generated method stub
+		return orderMap;
+	}
+
+
+	@Override
+	public ArrayList<Integer> getId() {
+		// TODO Auto-generated method stub
+		listId = distributorDetailsObject.getIds();
+		return listId;
+	}
+
+	
+	@Override
+	public String getDistributorDetails(Integer orderId) throws NoDataFoundException 
+	{
+		// TODO Auto-generated method stub
+		String finalResult = null;
+		for(Integer i : listId)
+		{
+			if(i == orderId)
+			{
+				finalResult = distributorDetailsObject.getDistributorDetailsDao(orderId);
+			}
+		}
+		if(finalResult == null)
+		{
+			throw new NoDataFoundException("Not Valid Id");
+		}
+		else
+		{
+			return finalResult;
+		}
+	}
+
+	@Override
+	public boolean idValidation(int id) throws InvalidIdException {
+		// TODO Auto-generated method stub
+		if(orderMap.containsKey(id))
+		{
+			return true;
+		}
+		else
+		{
+			throw new InvalidIdException("InvalidId");
+		}
 	}
 
  

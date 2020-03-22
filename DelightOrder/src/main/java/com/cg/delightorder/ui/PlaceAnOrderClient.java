@@ -6,6 +6,7 @@ import java.util.NoSuchElementException;
 import java.util.Scanner;
 import com.cg.delightorder.dto.PlaceAnOrder;
 import com.cg.delightorder.exception.InvalidDistributorIdException;
+import com.cg.delightorder.exception.InvalidIdException;
 import com.cg.delightorder.exception.InvalidPricePerUnitException;
 import com.cg.delightorder.exception.InvalidProductNameException;
 import com.cg.delightorder.exception.InvalidQuantityUnitException;
@@ -13,23 +14,18 @@ import com.cg.delightorder.exception.InvalidQuantityValueException;
 import com.cg.delightorder.exception.InvalidWarehouseIdException;
 import com.cg.delightorder.exception.NoDataFoundException;
 import com.cg.delightorder.exception.ProductOrderIdException;
-import com.cg.delightorder.service.DisplayDetails;
-import com.cg.delightorder.service.DisplayDetailsService;
-import com.cg.delightorder.service.DisplayOrderServices;
-import com.cg.delightorder.service.DistributorDetailsService;
-import com.cg.delightorder.service.OrderDetails;
 import com.cg.delightorder.service.PlaceAnOrderService;
-import com.cg.delightorder.service.ProductOrderService;
+import com.cg.delightorder.service.PlaceAnOrderServiceInterface;
 
 
 public class PlaceAnOrderClient {
 
 	public static void main(String[] args) throws ProductOrderIdException{
 		// TODO Auto-generated method stub
-		ProductOrderService order = new PlaceAnOrderService();
+		PlaceAnOrderServiceInterface order = new PlaceAnOrderService();
 		order.getOrderList();
 		
-		DisplayDetails stockService = new DisplayDetailsService();
+		PlaceAnOrderServiceInterface stockService = new PlaceAnOrderService();
 		
 		
 		String name;
@@ -68,10 +64,23 @@ public class PlaceAnOrderClient {
 	
 				@SuppressWarnings("resource")
 				Scanner scan = new Scanner(System.in);
+				int id;
 				
-				System.out.println("Enter the Key Id Which you want");
-				int id = scan.nextInt();
-				scan.nextLine();
+				while (true)
+				{
+					System.out.println("Enter the Key Id Which you want");
+					id = scan.nextInt();
+					try
+					{
+						if(order.idValidation(id))
+							break;
+					}
+					catch(InvalidIdException exception)
+					{
+						System.out.println(exception.getMessage()); 
+					}
+				}
+				
 				
 				while (true)
 				{
@@ -83,9 +92,9 @@ public class PlaceAnOrderClient {
 						if (order.productNameValidation(id, name))
 							break;
 					}
-					catch(InvalidProductNameException e)
+					catch(InvalidProductNameException exception)
 					{
-						System.out.println(e.getMessage());
+						System.out.println(exception.getMessage());
 					}
 				}
 				
@@ -98,12 +107,12 @@ public class PlaceAnOrderClient {
 						if (order.distributorIdValidation(id, distributor))
 							break;
 					}
-					catch (InvalidDistributorIdException e)
+					catch (InvalidDistributorIdException exception)
 					{
-						System.out.println(e.getMessage());
+						System.out.println(exception.getMessage());
 					}
 				}
-				
+				 
 				while (true)
 				{
 					System.out.println("Enter Warehouse Id");
@@ -113,9 +122,9 @@ public class PlaceAnOrderClient {
 						if (order.wareHouseIdValidation(id, warehouse))
 							break;
 					}
-					catch (InvalidWarehouseIdException e)
+					catch (InvalidWarehouseIdException exception)
 					{
-						System.out.println(e.getMessage());
+						System.out.println(exception.getMessage());
 					}
 				}
 				
@@ -128,9 +137,9 @@ public class PlaceAnOrderClient {
 						if (order.quantityValueValidation(id, value))
 							break;
 					}
-					catch(InvalidQuantityValueException e)
+					catch(InvalidQuantityValueException exception)
 					{
-						System.out.println(e.getMessage());
+						System.out.println(exception.getMessage());
 					}
 				}
 				
@@ -143,9 +152,9 @@ public class PlaceAnOrderClient {
 						if(order.quantityUnitValidation(id, unit))
 							break;
 					}
-					catch(InvalidQuantityUnitException e)
+					catch(InvalidQuantityUnitException exception)
 					{
-						System.out.println(e.getMessage());
+						System.out.println(exception.getMessage());
 					}
 				}
 				
@@ -158,9 +167,9 @@ public class PlaceAnOrderClient {
 						if(order.pricePerUnitValidation(id, price))
 							break;
 					}
-					catch(InvalidPricePerUnitException e)
+					catch(InvalidPricePerUnitException exception)
 					{
-						System.out.println(e.getMessage());
+						System.out.println(exception.getMessage());
 					}
 				}
 				
@@ -199,7 +208,7 @@ public class PlaceAnOrderClient {
 			
 			case 3:
 			{
-				OrderDetails object = new DisplayOrderServices();
+				PlaceAnOrderServiceInterface object = new PlaceAnOrderService();
 				List <PlaceAnOrder> detailList = object.getOrderDetailsService();
 				
 				for (int loop = 0; loop < detailList.size(); loop++)
@@ -217,7 +226,7 @@ public class PlaceAnOrderClient {
 			
 			case 4:
 			{
-				DistributorDetailsService distributorDetailsService = new DistributorDetailsService();
+				PlaceAnOrderServiceInterface distributorDetailsService = new PlaceAnOrderService();
 				Scanner scan = new Scanner(System.in);
 				System.out.println("Distributor id");
 				System.out.println(distributorDetailsService.getId());
