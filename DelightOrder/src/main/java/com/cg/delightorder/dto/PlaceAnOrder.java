@@ -14,7 +14,6 @@ public class PlaceAnOrder
 	private String productOrderId;
 	
 	
-
 	//constructor for adding stock details
 	public PlaceAnOrder(String productName, String distributorId, String warehouseId, double quantityValue,
 			String quantityUnit, double pricePerUnit) {

@@ -27,7 +27,6 @@ public class PlaceAnOrderClient {
 		
 		PlaceAnOrderServiceInterface stockService = new PlaceAnOrderService();
 		
-		
 		String name;
 		String distributor;
 		String warehouse;

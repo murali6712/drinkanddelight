@@ -33,6 +33,5 @@ public class DistributorDetailsDaoTest
 		ArrayList<Integer> list=distributorObject.getIds();
        
         assertArrayEquals(ArrayList,list.toArray());
-		
 	}
 }

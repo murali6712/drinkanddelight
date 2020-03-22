@@ -10,6 +10,7 @@ public class ProductPlaceAnOrderDao
 	
 	Map<Integer, PlaceAnOrder> placeAnOrderMap ;
 	public ProductPlaceAnOrderDao()
+	
 	{
 		placeAnOrderMap = PlaceAnOrderRepository.getStockRepository();
 	}

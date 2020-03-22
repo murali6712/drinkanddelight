@@ -7,5 +7,4 @@ public class InvalidIdException extends Exception {
 	{
 		super(string);
 	}
-
 }

@@ -12,6 +12,7 @@ public class DistributorDetailsDao
 {	
 	DistributorRepository distributorDetails = new DistributorRepository();
 	
+	
 	Map<Integer, DistributorDetails> detailsMap = new HashMap<Integer, DistributorDetails>();
 	
 	public DistributorDetailsDao()

@@ -16,7 +16,6 @@ public class DistributorDetails
 		this.phoneNumber = phoneNumber;
 	}
 	
-	
 	public int getDistributorId() {
 		return distributorId;
 	}

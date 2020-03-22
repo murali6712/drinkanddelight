@@ -37,6 +37,5 @@ public interface PlaceAnOrderServiceInterface
 	
 	public String getDistributorDetails(Integer orderId) throws NoDataFoundException;
 	public boolean idValidation(int id) throws InvalidIdException;
+	
 }
-
-
