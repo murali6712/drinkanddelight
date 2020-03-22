@@ -109,7 +109,7 @@ public class PlaceAnOrderService implements PlaceAnOrderServiceInterface
 		{
 			
 			return true;
-		}
+		} 
 		else
 		{
 			throw new InvalidQuantityValueException("Invalid Quantity Value");
